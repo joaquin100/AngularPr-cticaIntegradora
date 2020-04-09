@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PracticaIntegradora"
+    }
+  },
+  "defaultProject": "PracticaIntegradora",
+  "cli": {
+    "analytics": "0104bb00-7c9b-4a1e-a6ea-4194b0a00473"
+  }
 }
