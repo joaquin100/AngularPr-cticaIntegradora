@@ -7,19 +7,23 @@
         <a name="" id="" class="btn btn-primary" href="#" role="button"   >Buscar producto</a>
     </div>
     <div  class="ml-2">
-        <a nclass="btn btn-success"  href="#" role="button" >Añadir seleccionados a monitoreados</a>
+        <a class="btn btn-success"  href="#" role="button" >Añadir seleccionados a monitoreados</a>
     </div>
 </div>
 
-<div class=" mt-2">
+<div *ngIf = "productList.length > 0" class=" mt-2">
     <ul>
-        AQUÍ PONES EL COMPONENTE
-        //Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
-        //Nombre, ID, desc, precio || index (ngfor)
-        <app-product></app-product>
+        <!--AQUÍ PONES EL COMPONENTE-->
+        <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
+        //Nombre, ID, desc, precio || index (ngfor)-->
+        <li *ngFor = "let item of productList; let i = index" class="border list-unstyled">
+            <app-product [product] = productList[i] [position]=i></app-product>
+        </li>
+
+
     </ul>
 
-    <div class="alert alert-danger" role="alert"   >
+    <div *ngIf = "productList.length == 0" class="alert alert-danger" role="alert"   >
         <strong>Ningún producto concuerda con la búsqueda</strong>
     </div>
 
