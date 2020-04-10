@@ -6,10 +6,10 @@
          class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
     </div> 
     <div>
-        <a name="" id="" class="btn btn-primary" href="#" role="button" (click)="buscar()">Buscar producto</a>
+        <a name="" id="" class="btn btn-primary" href="#" routerLink="/products" role="button" (click)="buscar()">Buscar producto</a>
     </div>
     <div  class="ml-2">
-        <a class="btn btn-success"  href="#" role="button" >Añadir seleccionados a monitoreados</a>
+        <a class="btn btn-success"  href="#" routerLink="/products" role="button" >Añadir seleccionados a monitoreados</a>
     </div>
 </div>
 
@@ -19,15 +19,13 @@
         <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
         //Nombre, ID, desc, precio || index (ngfor)-->
         <li *ngFor = "let item of productList; let i = index" class="border list-unstyled">
-            <app-product [product] = productList[i] [position]=i
+            <app-product [product] = "item" [position]=i
             (positionToEliminate)="eliminar($event)"></app-product>
         </li>
 
-
     </ul>
+</div>
 
-    <div *ngIf = "productList.length == 0" class="alert alert-danger" role="alert"   >
-        <strong>Ningún producto concuerda con la búsqueda</strong>
-    </div>
-
+<div *ngIf = "productList.length == 0" class="alert alert-danger" role="alert"   >
+    <strong>Ningún producto concuerda con la búsqueda</strong>
 </div>

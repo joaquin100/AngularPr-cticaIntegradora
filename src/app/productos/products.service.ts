@@ -7,17 +7,19 @@ import { Subject } from 'rxjs';
 })
 export class ProductsService {
   productos:Product[];
-  prod:Product;
   filtrados: Product[];
-  especificacion: Especificacion[]; //Duda no sé si mandar esto o []
 
   productSubject = new Subject<Product[]>();
 
   constructor() {
     this.productos = [
-      new Product(12,"Smartphone","LG","Quadcore 3GHZ", 12018.5,5,[]),
-      new Product(123,"Smartwatch", "Sony", "3GB Ram", 4999.9,0,[]),
-      new Product(34,"SmartTV", "Sony", "52 pulgadas, Conexión wifi", 8999.9,3,[])
+      new Product(12,"Smartphone","LG","Quadcore 3GHZ", 12018.5,5,
+      [new Especificacion("memoria ram",4,"GB"),new Especificacion("memoria interna",64,"GB"),
+      new Especificacion("SO","android 9","")]),
+      new Product(123,"Smartwatch", "Sony", "3GB Ram", 4999.9,0,
+      []),
+      new Product(34,"SmartTV", "Sony", "52 pulgadas, Conexión wifi", 8999.9,3,
+      [])
     ]
 
     this.filtrados = this.productos.slice();
@@ -32,9 +34,9 @@ export class ProductsService {
 
   getProduct(id:number):Product{
     console.log(id);
-    this.prod = this.productos.find(prod => prod.uid = id);
-    console.log(this.prod);
-    return this.prod;
+    let prod = this.productos.find(prod => prod.uid == id);
+    console.log("console del servicio",prod);
+    return Object.assign({},prod);
   }
 
   addProduct(){
@@ -57,7 +59,7 @@ export class ProductsService {
     this.filtrados = this.productos.filter(p => p.nombre.toUpperCase().includes(inputValue.toUpperCase())
         || p.descripcion.toUpperCase().includes(inputValue.toUpperCase())); 
 
-        this.productSubject.next(this.filtrados);   
+    this.productSubject.next(this.filtrados);   
   }
 
 }
