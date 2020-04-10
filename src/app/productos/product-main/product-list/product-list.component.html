@@ -1,10 +1,12 @@
 <div class="row">
     <div class="col-4">
-        <input type="text" 
-         class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+        <input type="text"
+        [(ngModel)] = "inputValue" 
+        (keydown.enter)="buscar()"
+         class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
     </div> 
     <div>
-        <a name="" id="" class="btn btn-primary" href="#" role="button"   >Buscar producto</a>
+        <a name="" id="" class="btn btn-primary" href="#" role="button" (click)="buscar()">Buscar producto</a>
     </div>
     <div  class="ml-2">
         <a class="btn btn-success"  href="#" role="button" >Añadir seleccionados a monitoreados</a>
@@ -17,7 +19,8 @@
         <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
         //Nombre, ID, desc, precio || index (ngfor)-->
         <li *ngFor = "let item of productList; let i = index" class="border list-unstyled">
-            <app-product [product] = productList[i] [position]=i></app-product>
+            <app-product [product] = productList[i] [position]=i
+            (positionToEliminate)="eliminar($event)"></app-product>
         </li>
 
 

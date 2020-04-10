@@ -1,5 +1,6 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
 import { Product } from '../../../Product';
+
 
 @Component({
   selector: 'app-product',
@@ -11,10 +12,16 @@ export class ProductComponent implements OnInit {
   ////Nombre, ID, desc, precio || index (ngfor)
   @Input() product:Product;
   @Input() position:number;
+
+  @Output() positionToEliminate = new EventEmitter;
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  //Event binding que a
+  eliminarElemento(){
+    console.log("posición del elemento a eliminar",this.positionToEliminate);
+    this.positionToEliminate.emit(this.position);  
+  }
+
 }

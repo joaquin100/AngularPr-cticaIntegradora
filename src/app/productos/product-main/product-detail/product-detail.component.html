@@ -1,1 +1,12 @@
 <p>Este es product-detail para el producto {{id}}</p>
+<div class="media col">
+    <img class="mr-3" src="https://picsum.photos/id/{{product.uid}}/100/100 " alt="Generic placeholder image">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1"></h5>
+            <p><strong>{{product.nombre}}</strong></p>
+            <p>Precio (MXN):{{product.precio}} $</p>
+            <p>marca:{{product.marca}}  </p>
+            <p>Descripción: {{product.descripcion}} </p>
+            <p>Existencia:{{product.existencia}} </p>
+        </div>
+</div>

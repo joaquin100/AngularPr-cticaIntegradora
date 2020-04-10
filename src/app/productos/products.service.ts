@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class ProductsService {
   productos:Product[];
   prod:Product;
+  filtrados: Product[];
   especificacion: Especificacion[]; //Duda no sé si mandar esto o []
 
   productSubject = new Subject<Product[]>();
@@ -19,6 +20,8 @@ export class ProductsService {
       new Product(34,"SmartTV", "Sony", "52 pulgadas, Conexión wifi", 8999.9,3,[])
     ]
 
+    this.filtrados = this.productos.slice();
+
     this.productSubject.next(this.getProducts());
 
   }
@@ -27,9 +30,9 @@ export class ProductsService {
     return this.productos.slice();
   }
 
-  getProduct(index:number):Product{
-    console.log(index);
-    this.prod = this.productos.find(prod => prod.uid = index);
+  getProduct(id:number):Product{
+    console.log(id);
+    this.prod = this.productos.find(prod => prod.uid = id);
     console.log(this.prod);
     return this.prod;
   }
@@ -42,8 +45,19 @@ export class ProductsService {
 
   }
 
-  eliminateProduct(){
+  eliminateProduct(position:number){
+    console.log("Eliminando la posición", position);
+    this.productos.splice(position,1);
+    this.productSubject.next(this.getProducts());
+  }
+
+  filtrandoProductos(inputValue:string){
+    console.log("Filtrando");
     
+    this.filtrados = this.productos.filter(p => p.nombre.toUpperCase().includes(inputValue.toUpperCase())
+        || p.descripcion.toUpperCase().includes(inputValue.toUpperCase())); 
+
+        this.productSubject.next(this.filtrados);   
   }
 
 }
