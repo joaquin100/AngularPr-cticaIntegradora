@@ -58,10 +58,20 @@
             <input [(ngModel)] = "especificaciones.unidad" ngModel
             name = "unidad" #v3 type="text" class="form-control">
         </div>
-        <div>
+        <div  *ngIf = "modoAgregar == true" >
             <label for="" style="color:white">añadir</label>
             <a name="" id="" class="form-control btn btn-success" 
             href="#" routerLink = "/products/new" role="button"
+            (click) = "agregarEspecificacion()"
+            > <i class="fas fa-plus-circle    "></i></a>
+
+            
+        </div>
+
+        <div *ngIf = "modoAgregar == false">
+            <label for="" style="color:white">añadir</label>
+            <a name="" id="" class="form-control btn btn-success" 
+            href="#" routerLink = "/products/{{product.uid}}/edit" role="button"
             (click) = "agregarEspecificacion()"
             > <i class="fas fa-plus-circle    "></i></a>
         </div>
@@ -78,7 +88,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let esp of product.especificacion">
+                <tr *ngFor="let esp of product.especificacion; let i = index">
                     <td scope="row">{{esp.atributo}}</td>
                     <td>{{esp.valor}}</td>
                     <td>{{esp.unidad}}</td>
@@ -89,7 +99,7 @@
     </div>
 
     <input type="submit" class="btn btn-primary" value="Guardar" [disabled] = "!f.valid">
-    <button class="btn btn-secondary ml-3">Cancelar</button>
+    <button class="btn btn-secondary ml-3" (click)="regresar()">Cancelar</button>
 
 </form>
 

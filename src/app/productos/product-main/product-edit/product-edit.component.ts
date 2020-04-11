@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import { Product, Especificacion } from '../../Product';
 import { NgForm } from '@angular/forms';
 import { ProductsService } from '../../products.service';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -50,6 +51,11 @@ export class ProductEditComponent implements OnInit {
     this.location.back();
   }
 
+  regresarAproductos() {
+    this.router.navigate(['/products']);
+    //Otra forma para regresar a la ruta anterior
+  }
+
   agregarEspecificacion(){
     console.log("Agregando especificación");
     console.log(this.especificaciones);
@@ -58,12 +64,21 @@ export class ProductEditComponent implements OnInit {
   }
 
   submit(formulario:NgForm){
-    if(formulario.valid == true){
+    if(formulario.valid == true && this.modoAgregar == true){
       console.log("Formulario",formulario);
       console.log("Product to add",this.product);
       this.productService.addProduct(Object.assign({},this.product));
       this.regresar();
-    }else{
+    }
+
+    else if(formulario.valid == true && this.modoAgregar == false){
+      //Se va a editar el producto
+      console.log("Voy a editar");
+      this.productService.editProduct(Object.assign({},this.product));
+      this.regresarAproductos();
+    }
+    else{
+      console.log("Me voy a regresar");
       this.regresar();
     }
     

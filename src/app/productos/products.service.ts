@@ -45,8 +45,12 @@ export class ProductsService {
     this.productSubject.next(this.getProducts());
   }
 
-  editProduct(){
-
+  editProduct(productToEdit:Product){
+    console.log("Editando producto:",productToEdit);
+    let positionToEdit = this.productos.findIndex((prod) => prod.uid == productToEdit.uid);
+    console.log("position to edit",positionToEdit);
+    this.productos.splice(positionToEdit,1,productToEdit);
+    this.productSubject.next(this.getProducts());
   }
 
   eliminateProduct(position:number){
