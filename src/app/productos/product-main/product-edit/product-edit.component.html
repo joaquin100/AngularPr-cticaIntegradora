@@ -92,7 +92,7 @@
                     <td scope="row">{{esp.atributo}}</td>
                     <td>{{esp.valor}}</td>
                     <td>{{esp.unidad}}</td>
-                    <td><button class="btn btn-primary"><i class="fas fa-trash"></i></button></td>
+                    <td><a href="#" role="button" routerLink="/products/{{product.uid}}/edit" class="btn btn-primary" (click)="eliminarEspecificacion(i)"><i class="fas fa-trash"></i></a></td>
                 </tr>
             </tbody>
         </table>

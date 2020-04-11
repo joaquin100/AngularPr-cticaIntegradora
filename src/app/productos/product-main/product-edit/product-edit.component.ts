@@ -70,7 +70,6 @@ export class ProductEditComponent implements OnInit {
       this.productService.addProduct(Object.assign({},this.product));
       this.regresar();
     }
-
     else if(formulario.valid == true && this.modoAgregar == false){
       //Se va a editar el producto
       console.log("Voy a editar");
@@ -82,6 +81,13 @@ export class ProductEditComponent implements OnInit {
       this.regresar();
     }
     
+  }
+
+  eliminarEspecificacion(index:number){
+    console.log("índice de la especificación a borrar",index);
+    console.log("product to edit especificaciones",this.product);
+    this.product.especificacion.splice(index,1);
+    console.log("product especificaciones eliminadas",this.product);
   }
 
 
