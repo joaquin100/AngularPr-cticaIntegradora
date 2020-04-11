@@ -1,52 +1,61 @@
-<form>
+<p *ngIf = "modoAgregar == true">Modo Agregar nuevo producto</p>
+<p *ngIf = "modoAgregar == false" >Modo Editar producto</p>
+<form #f = "ngForm" (ngSubmit)="submit(f)">
     <div class="media">
         <a class="d-flex align-self-bottom" href="#">
-            <img class="mr-3" src="https://picsum.photos/id/product.uid/100/100" alt="Generic placeholder image">
+            <img class="mr-3" src="https://picsum.photos/id/{{product.uid}}/100/100" alt="Generic placeholder image"
+            *ngIf = "product.uid > 0">
         </a>
         <div class="media-body">
             <div class="form-group">
                 <label for="">uid (clave de producto)</label>
-                <input [(ngModel)] = "product.uid" name = "uid" type="number" class="form-control" min="0" required>
+                <input *ngIf = "modoAgregar == true" [(ngModel)] = "product.uid" ngModel name = "uid" 
+                type="number" class="form-control" min="0" required>
+
+                <input *ngIf = "modoAgregar == false" [(ngModel)] = "product.uid" ngModel name = "uid" 
+                type="number" class="form-control" min="0" disabled>
+
+
             </div>
             <div class="form-group">
                 <label for="">Nombre de producto</label>
-                <input [(ngModel)] = "product.nombre" name = "nombre" type="text" class="form-control" required>
+                <input [(ngModel)] = "product.nombre" ngModel name = "nombre" type="text" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="">Marca</label>
-                <select class="form-control" name="marca" [(ngModel)] = "product.marca">
+                <select class="form-control" name="marca" ngModel [(ngModel)] = "product.marca">
                     <option value="">Seleccionar una opción</option>
                     <option *ngFor="let m of marcas">{{m}}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Precio</label>
-                <input [(ngModel)] = "product.precio" name = "precio" type="number" class="form-control" required>
+                <input [(ngModel)] = "product.precio" name = "precio" type="number" class="form-control" min="0" required>
             </div>
             <div class="form-group">
                 <label for="">Breve descripción</label>
-                <input [(ngModel)] = "product.descripcion" name = "descripcion" type="text" class="form-control" required>
+                <input [(ngModel)] = "product.descripcion" ngModel name = "descripcion" type="text" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="">Existencia</label>
-                <input [(ngModel)] = "product.existencia" name = "existencia" type="number" class="form-control" required>
+                <input [(ngModel)] = "product.existencia" ngModel name = "existencia" type="number" class="form-control" required>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-2">
             <label for="">Atributo</label>
-            <input [(ngModel)] = "especificaciones.atributo"
+            <input [(ngModel)] = "especificaciones.atributo" ngModel
             name = "atributo" #v1 type="text" class="form-control">
         </div>
         <div class="col-2">
             <label for="">Valor</label>
-            <input [(ngModel)] = "especificaciones.valor"
+            <input [(ngModel)] = "especificaciones.valor" ngModel
             name = "valor" #v2 type="text" class="form-control">
         </div>
         <div class="col-2">
             <label for="">Unidad</label>
-            <input [(ngModel)] = "especificaciones.unidad" 
+            <input [(ngModel)] = "especificaciones.unidad" ngModel
             name = "unidad" #v3 type="text" class="form-control">
         </div>
         <div>
@@ -79,9 +88,11 @@
         </table>
     </div>
 
-    <input type="submit" class="btn btn-primary" value="Guardar">
+    <input type="submit" class="btn btn-primary" value="Guardar" [disabled] = "!f.valid">
     <button class="btn btn-secondary ml-3">Cancelar</button>
 
 </form>
 
 <p>{{product | json}}</p>
+<p>{{f.value | json}}</p>
+<p>{{f.valid}}</p>

@@ -39,8 +39,10 @@ export class ProductsService {
     return Object.assign({},prod);
   }
 
-  addProduct(){
-    
+  addProduct(newProduct:Product){
+    console.log("Añadiendo productos");
+    this.productos.push(newProduct);
+    this.productSubject.next(this.getProducts());
   }
 
   editProduct(){
@@ -60,6 +62,16 @@ export class ProductsService {
         || p.descripcion.toUpperCase().includes(inputValue.toUpperCase())); 
 
     this.productSubject.next(this.filtrados);   
+  }
+
+  ExisteEsteId(id:number):boolean{
+    let productoYaExitente = this.productos.find(prod => prod.uid == id);
+    if(productoYaExitente){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
 }

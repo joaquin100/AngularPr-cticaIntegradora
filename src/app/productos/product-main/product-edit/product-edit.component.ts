@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router,Params, ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 import { Product, Especificacion } from '../../Product';
+import { NgForm } from '@angular/forms';
+import { ProductsService } from '../../products.service';
 
 
 @Component({
@@ -10,19 +12,32 @@ import { Product, Especificacion } from '../../Product';
   styleUrls: ['./product-edit.component.scss']
 })
 export class ProductEditComponent implements OnInit {
-  modoAgregar = true;//modo /products/new
+  modoAgregar:boolean;//modo /products/new
   id: number;
   marcas = ["HP","Sony","LG"];
   especificaciones = new Especificacion("","","");
   product:Product;
 
-  constructor(private router: Router, private route: ActivatedRoute, private location: Location) {
+  constructor(private productService:ProductsService,private router: Router, private route: ActivatedRoute, private location: Location) {
 
   }
 
   ngOnInit() {
-    this.product = new Product(0,"","","",0,0,[]);
-    this.route.params.subscribe((params) => this.id = params['id'])
+    
+    //this.route.params.subscribe((params) => this.id = params['id'])
+      if(this.router.url.includes("edit") == true){
+        console.log("Modo editar")
+        this.modoAgregar = false;
+        this.route.params.subscribe((params) =>{
+          this.id = params['id'];
+          this.product = this.productService.getProduct(this.id);
+          console.log(this.product);
+        });
+      }else{
+        this.modoAgregar = true;
+        this.product = new Product(0,"","","",0,0,[]);
+      }
+
   }
 
   editar() {
@@ -30,7 +45,7 @@ export class ProductEditComponent implements OnInit {
     //this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route})
   }
   regresar() {
-    this.router.navigate(['/products']);
+    //this.router.navigate(['/products']);
     //Otra forma para regresar a la ruta anterior
     this.location.back();
   }
@@ -41,6 +56,19 @@ export class ProductEditComponent implements OnInit {
     this.product.especificacion.push(this.especificaciones);
     this.especificaciones = new Especificacion("","","");
   }
+
+  submit(formulario:NgForm){
+    if(formulario.valid == true){
+      console.log("Formulario",formulario);
+      console.log("Product to add",this.product);
+      this.productService.addProduct(Object.assign({},this.product));
+      this.regresar();
+    }else{
+      this.regresar();
+    }
+    
+  }
+
 
 
 }
