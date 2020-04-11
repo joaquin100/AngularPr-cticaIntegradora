@@ -13,17 +13,15 @@ export class ProductEditComponent implements OnInit {
   modoAgregar = true;//modo /products/new
   id: number;
   marcas = ["HP","Sony","LG"];
-  especificaciones = [];
+  especificaciones = new Especificacion("","","");
   product:Product;
-
-  especificacionesIndex = 0;
 
   constructor(private router: Router, private route: ActivatedRoute, private location: Location) {
 
   }
 
   ngOnInit() {
-    this.product = new Product(0,"","","",0,0,[new Especificacion("","","")]);
+    this.product = new Product(0,"","","",0,0,[]);
     this.route.params.subscribe((params) => this.id = params['id'])
   }
 
@@ -39,8 +37,9 @@ export class ProductEditComponent implements OnInit {
 
   agregarEspecificacion(){
     console.log("Agregando especificación");
-    this.product.especificacion.push(new Especificacion("","",""));
-    this.especificacionesIndex++;
+    console.log(this.especificaciones);
+    this.product.especificacion.push(this.especificaciones);
+    this.especificaciones = new Especificacion("","","");
   }
 
 
