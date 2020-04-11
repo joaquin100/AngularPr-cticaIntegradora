@@ -1,79 +1,87 @@
-<form >
+<form>
     <div class="media">
         <a class="d-flex align-self-bottom" href="#">
-            <img class="mr-3"  src="https://picsum.photos/id/AQUÍ PONER ID/100/100" alt="Generic placeholder image">
+            <img class="mr-3" src="https://picsum.photos/id/product.uid/100/100" alt="Generic placeholder image">
         </a>
         <div class="media-body">
             <div class="form-group">
-            <label for="">uid (clave de producto)</label>
-            <input type="number" class="form-control"  min="0"  required>
+                <label for="">uid (clave de producto)</label>
+                <input [(ngModel)] = "product.uid" name = "uid" type="number" class="form-control" min="0" required>
             </div>
             <div class="form-group">
-            <label for="">Nombre de producto</label>
-            <input type="text" class="form-control"   required>
+                <label for="">Nombre de producto</label>
+                <input [(ngModel)] = "product.nombre" name = "nombre" type="text" class="form-control" required>
             </div>
             <div class="form-group">
-            <label for="">Marca</label>
-            <select class="form-control" name="marca"  >
-                <option value="">Seleccionar una opción</option>
-                <option >  </option>
-            </select>
+                <label for="">Marca</label>
+                <select class="form-control" name="marca" [(ngModel)] = "product.marca">
+                    <option value="">Seleccionar una opción</option>
+                    <option *ngFor="let m of marcas">{{m}}</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="">Precio</label> 
-                <input type="number" class="form-control" required >
+                <label for="">Precio</label>
+                <input [(ngModel)] = "product.precio" name = "precio" type="number" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="">Breve descripción</label>
-                <input type="text" class="form-control"  required >
+                <input [(ngModel)] = "product.descripcion" name = "descripcion" type="text" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="">Existencia</label>
-                <input type="number" class="form-control"  required >
+                <input [(ngModel)] = "product.existencia" name = "existencia" type="number" class="form-control" required>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-2">
             <label for="">Atributo</label>
-            <input #v1 type="text" class="form-control" >
+            <input [(ngModel)] = "product.especificacion[especificacionesIndex].atributo"
+            name = "atributo" #v1 type="text" class="form-control">
         </div>
         <div class="col-2">
             <label for="">Valor</label>
-            <input #v2 type="text" class="form-control" >
+            <input [(ngModel)] = "product.especificacion[especificacionesIndex].valor"
+            name = "valor" #v2 type="text" class="form-control">
         </div>
         <div class="col-2">
             <label for="">Unidad</label>
-            <input #v3  type="text" class="form-control" >
+            <input [(ngModel)] = "product.especificacion[especificacionesIndex].unidad" 
+            name = "unidad" #v3 type="text" class="form-control">
         </div>
         <div>
             <label for="" style="color:white">añadir</label>
-            <a  name="" id="" class="form-control btn btn-success" href="#" role="button" > <i class="fas fa-plus-circle    "></i></a>
+            <a name="" id="" class="form-control btn btn-success" 
+            href="#" routerLink = "/products/new" role="button"
+            (click) = "agregarEspecificacion()"
+            > <i class="fas fa-plus-circle    "></i></a>
         </div>
     </div>
 
     <div>
-    <table class="table mt-3">
-        <thead>
-            <tr>
-                <th>Atributo</th>
-                <th>Valor</th>
-                <th>Unidad</th>
-                <th>Borrar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr >
-                <td scope="row"></td>
-                <td></td>
-                <td></td>
-                <td><button class="btn btn-primary" ><i class="fas fa-trash    "></i></button></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>Atributo</th>
+                    <th>Valor</th>
+                    <th>Unidad</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let esp of product.especificacion">
+                    <td scope="row">{{esp.atributo}}</td>
+                    <td>{{esp.valor}}</td>
+                    <td>{{esp.unidad}}</td>
+                    <td><button class="btn btn-primary"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <input type="submit" class="btn btn-primary"  value="Guardar">
-    <button class="btn btn-secondary ml-3" >Cancelar</button> 
+    <input type="submit" class="btn btn-primary" value="Guardar">
+    <button class="btn btn-secondary ml-3">Cancelar</button>
 
-    </form>
+</form>
+
+<p>{{product | json}}</p>

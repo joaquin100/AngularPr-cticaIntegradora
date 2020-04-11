@@ -10,3 +10,19 @@
             <p>Existencia:{{product.existencia}} </p>
         </div>
 </div>
+
+<div *ngIf = "product.especificacion.length > 0" >
+    <table class="table">
+        <tr>
+            <th>Atributo</th>
+            <th>Valor</th>
+            <th>Unidad</th>
+          </tr>
+        <tr *ngFor = "let item of product.especificacion; let i = index">
+            <td>{{item.atributo}}</td>
+            <td>{{item.valor}}</td>
+            <td>{{item.unidad }}</td>
+        </tr>
+    </table>
+
+</div>
