@@ -75,6 +75,17 @@ export class ProductsService {
     this.productos.splice(positionToEdit, 1, productToEdit);
     this.productSubject.next(this.getProducts());
     this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
+
+    let estaEnMonitoreados = this.productosMonitoreados.find((prod)=>prod.uid == productToEdit.uid);
+
+    if(estaEnMonitoreados){
+      let positionToEditInMonitoreados = this.productosMonitoreados.findIndex((prod)=>prod.uid == productToEdit.uid);
+      this.productosMonitoreados.splice(positionToEditInMonitoreados,1,productToEdit);
+      this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
+
+
+    }
+    
   }
 
   eliminateProduct(position: number, modeInventario: boolean) {
