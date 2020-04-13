@@ -1,3 +1,6 @@
+<p *ngIf ="modeInventario == true">Modo product-list</p>
+<p *ngIf ="modeInventario == false">Modo monitoreados</p>
+
 <div class="row">
     <div class="col-4">
         <input type="text"
@@ -8,24 +11,44 @@
     <div>
         <a name="" id="" class="btn btn-primary" href="#" routerLink="/products" role="button" (click)="buscar()">Buscar producto</a>
     </div>
-    <div  class="ml-2">
-        <a class="btn btn-success"  href="#" routerLink="/products" role="button" >Añadir seleccionados a monitoreados</a>
+    <div *ngIf ="modeInventario == true"  class="ml-2">
+        <button [disabled] = "!addMonitoreados" (click)="addToMonitoreados()"
+        class="btn btn-success"  href="#" routerLink="/products">Añadir seleccionados a monitoreados</button >
     </div>
+
 </div>
 
-<div *ngIf = "productList.length > 0" class=" mt-2">
+<div *ngIf = "productList.length > 0 && modeInventario == true" class=" mt-2">
     <ul>
         <!--AQUÍ PONES EL COMPONENTE-->
         <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
         //Nombre, ID, desc, precio || index (ngfor)-->
         <li *ngFor = "let item of productList; let i = index" class="border list-unstyled">
-            <app-product [product] = "item" [position]=i
-            (positionToEliminate)="eliminar($event)"></app-product>
+            <app-product [product] = "item" [position]=i [modoProductos] = "true"
+            (positionToEliminate)="eliminar($event)"
+            (productToMonitoreados) = "sendToMonitoreados($event)"
+            ></app-product>
         </li>
 
     </ul>
 </div>
 
-<div *ngIf = "productList.length == 0" class="alert alert-danger" role="alert"   >
+<div *ngIf = "productosMonitoreadosList.length > 0 && modeInventario == false" class=" mt-2">
+    <ul>
+        <!--AQUÍ PONES EL COMPONENTE-->
+        <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
+        //Nombre, ID, desc, precio || index (ngfor)-->
+        <li *ngFor = "let item of productosMonitoreadosList; let i = index" class="border list-unstyled">
+            <app-product [product] = "item" [position]=i [modoProductos]="modeInventario"></app-product>
+        </li>
+
+    </ul>
+</div>
+
+<div *ngIf = "productList.length == 0 && modeInventario == true" class="alert alert-danger" role="alert"   >
+    <strong>Ningún producto concuerda con la búsqueda</strong>
+</div>
+
+<div *ngIf = "productosMonitoreadosList.length == 0 && modeInventario == false" class="alert alert-danger" role="alert"   >
     <strong>Ningún producto concuerda con la búsqueda</strong>
 </div>

@@ -4,8 +4,6 @@ import {Location} from '@angular/common';
 import { Product, Especificacion } from '../../Product';
 import { NgForm } from '@angular/forms';
 import { ProductsService } from '../../products.service';
-import { ThrowStmt } from '@angular/compiler';
-
 
 @Component({
   selector: 'app-product-edit',

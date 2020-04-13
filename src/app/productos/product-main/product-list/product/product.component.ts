@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../../Product';
 
 
@@ -10,18 +10,28 @@ import { Product } from '../../../Product';
 export class ProductComponent implements OnInit {
   //Recibes inputs del padre
   ////Nombre, ID, desc, precio || index (ngfor)
-  @Input() product:Product;
-  @Input() position:number;
+
+  checkBoxValue = false;
+
+  @Input() product: Product;
+  @Input() position: number;
+  @Input() modoProductos: Boolean;
 
   @Output() positionToEliminate = new EventEmitter;
+  @Output() productToMonitoreados = new EventEmitter;
+  //@Output() checkBoxValueEmitter = new EventEmitter;
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  eliminarElemento(){
-    console.log("posición del elemento a eliminar",this.positionToEliminate);
-    this.positionToEliminate.emit(this.position);  
+  eliminarElemento() {
+    console.log("posición del elemento a eliminar", this.positionToEliminate);
+    this.positionToEliminate.emit(this.position);
   }
 
+  enviarAmonitoreados() {
+    console.log("Enviando info para añadir a monitoreados");
+    this.productToMonitoreados.emit(this.position);
+  }
 }

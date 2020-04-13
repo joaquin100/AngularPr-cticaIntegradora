@@ -8,8 +8,12 @@ import { Subject } from 'rxjs';
 export class ProductsService {
   productos:Product[];
   filtrados: Product[];
+  productosMonitoreados: Product[];
+  productosMonitoreadosBooleans:boolean[];
 
   productSubject = new Subject<Product[]>();
+  productMonitoreadosSubject = new Subject<Product[]>();
+  productMonitoreadosBooleanSubject = new Subject<boolean[]>();
 
   constructor() {
     this.productos = [
@@ -21,15 +25,29 @@ export class ProductsService {
       new Product(34,"SmartTV", "Sony", "52 pulgadas, Conexión wifi", 8999.9,3,
       [])
     ]
+    this.productosMonitoreados = []
+    this.productosMonitoreadosBooleans = [false,false,false];
 
     this.filtrados = this.productos.slice();
 
     this.productSubject.next(this.getProducts());
 
+    this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
+
+    this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
+
   }
 
   getProducts():Product[]{
     return this.productos.slice();
+  }
+
+  getProductosMonitoreados():Product[]{
+    return this.productosMonitoreados.slice();
+  }
+
+  getProductosMonitoradosBooleans():boolean[]{
+    return this.productosMonitoreadosBooleans.slice();
   }
 
   getProduct(id:number):Product{
@@ -66,6 +84,27 @@ export class ProductsService {
         || p.descripcion.toUpperCase().includes(inputValue.toUpperCase())); 
 
     this.productSubject.next(this.filtrados);   
+  }
+
+  toMonitoreados(position:number){
+    this.productosMonitoreadosBooleans[position] = !this.productosMonitoreadosBooleans[position];
+    this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
+
+  }
+
+  addMonitoreados(){
+    for(let i=0; i<this.productos.length; i++){
+      if(this.productosMonitoreadosBooleans[i] == true){
+        let exists = this.productosMonitoreados.find((prod) => prod.uid == this.productos[i].uid)
+        if(exists){
+        }else{
+          this.productosMonitoreados.push(Object.assign({},this.productos[i]));
+        }
+      }
+
+    }
+    this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
+
   }
 
   ExisteEsteId(id:number):boolean{
