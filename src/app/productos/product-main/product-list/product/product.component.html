@@ -26,11 +26,20 @@
                 <a name="" id="" class="btn btn-primary" href="#" routerLink="/products/{{product.uid}}"
                     role="button"><i class="fas fa-search    "></i></a>
             </div>
-            <div class="row mt-3">
+
+            <div *ngIf = "modoProductos==true" class="row mt-3">
                 <a name="" id="" class="btn btn-danger" href="#" role="button" routerLink="/products"
                     (click)="eliminarElemento()">
                     <i class="fas fa-trash"></i></a>
             </div>
+
+            <div *ngIf = "modoProductos==false" class="row mt-3">
+                <a name="" id="" class="btn btn-danger" href="#" role="button" routerLink="/monitoreo"
+                    (click)="eliminarElemento()">
+                    <i class="fas fa-trash"></i></a>
+            </div>
+
+
         </div>
     </div>
 </div>

@@ -39,7 +39,9 @@
         <!--//Ng cfor, le pasas de parametro el index, aparte de los otros datos de los productos.
         //Nombre, ID, desc, precio || index (ngfor)-->
         <li *ngFor = "let item of productosMonitoreadosList; let i = index" class="border list-unstyled">
-            <app-product [product] = "item" [position]=i [modoProductos]="modeInventario"></app-product>
+            <app-product [product] = "item" [position]=i [modoProductos]="modeInventario"
+            (positionToEliminate)="eliminar($event)"
+            ></app-product>
         </li>
 
     </ul>

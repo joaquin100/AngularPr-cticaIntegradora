@@ -54,11 +54,12 @@ export class ProductListComponent implements OnInit {
 
   eliminar(index){
     console.log("El padre eliminará",index);
-    this.productService.eliminateProduct(index);
+    this.productService.eliminateProduct(index,this.modeInventario);
   }
 
 
-  sendToMonitoreados(position){
+
+ sendToMonitoreados(position){
     this.addMonitoreados = true;
     this.productService.toMonitoreados(position);
     console.log(this.productosMonitoreadosBooleans);
