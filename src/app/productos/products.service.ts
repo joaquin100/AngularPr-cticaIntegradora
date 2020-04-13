@@ -60,7 +60,9 @@ export class ProductsService {
   addProduct(newProduct:Product){
     console.log("Añadiendo productos");
     this.productos.push(newProduct);
+    this.productosMonitoreadosBooleans.push(false);
     this.productSubject.next(this.getProducts());
+    this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
   }
 
   editProduct(productToEdit:Product){
@@ -69,11 +71,13 @@ export class ProductsService {
     console.log("position to edit",positionToEdit);
     this.productos.splice(positionToEdit,1,productToEdit);
     this.productSubject.next(this.getProducts());
+    this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
   }
 
   eliminateProduct(position:number){
     console.log("Eliminando la posición", position);
     this.productos.splice(position,1);
+    this.productosMonitoreadosBooleans.splice(position,1);
     this.productSubject.next(this.getProducts());
   }
 
@@ -87,7 +91,7 @@ export class ProductsService {
   }
 
   toMonitoreados(position:number){
-    this.productosMonitoreadosBooleans[position] = !this.productosMonitoreadosBooleans[position];
+    this.productosMonitoreadosBooleans[position] = true;
     this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
 
   }
@@ -103,7 +107,12 @@ export class ProductsService {
       }
 
     }
+
+    for(let i=0; i < this.productosMonitoreadosBooleans.length; i++){
+      this.productosMonitoreadosBooleans[i] = false;
+    }
     this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
+    this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());
 
   }
 
