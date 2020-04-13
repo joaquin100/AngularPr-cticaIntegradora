@@ -110,6 +110,11 @@ export class ProductsService {
     this.productSubject.next(this.filtrados);
   }
 
+  filtradoMonitoreados(inputValue: string){
+    console.log("Filtrando Monitoreados");
+
+  }
+
   toMonitoreados(position: number) {
     this.productosMonitoreadosBooleans[position] = true;
     this.productMonitoreadosBooleanSubject.next(this.getProductosMonitoradosBooleans());

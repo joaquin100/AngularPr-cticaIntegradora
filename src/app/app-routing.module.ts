@@ -8,7 +8,7 @@ import { ProductEditComponent } from './productos/product-main/product-edit/prod
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  {path:'home',redirectTo:'/home',pathMatch:'full'},
+  {path:'',redirectTo:'/home',pathMatch:'full'},
   {path:'home',component:HomeComponent},
   {path:'products',component:ProductMainComponent,
   children:[
