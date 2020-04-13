@@ -9,6 +9,7 @@ export class ProductsService {
   productos: Product[];
   filtrados: Product[];
   productosMonitoreados: Product[];
+  filtradosMonitoreados:Product[];
   productosMonitoreadosBooleans: boolean[];
 
   productSubject = new Subject<Product[]>();
@@ -29,6 +30,8 @@ export class ProductsService {
     this.productosMonitoreadosBooleans = [false, false, false];
 
     this.filtrados = this.productos.slice();
+
+    this.filtradosMonitoreados = this.productosMonitoreados.slice();
 
     this.productSubject.next(this.getProducts());
 
@@ -82,9 +85,10 @@ export class ProductsService {
       let productToEliminateInMonitoreados = Object.assign({}, this.productos[position]);
       console.log("producto a eliminar en monitoreados",productToEliminateInMonitoreados);
 
-      let existeEnMonitoreados = this.productosMonitoreados.find((prod)=>prod.uid = productToEliminateInMonitoreados.uid);
+      let existeEnMonitoreados = this.productosMonitoreados.find((prod)=>prod.uid == productToEliminateInMonitoreados.uid);
       if(existeEnMonitoreados){
-        let positionInMonitoreados = this.productosMonitoreados.findIndex((prod)=>prod.uid = productToEliminateInMonitoreados.uid);
+        console.log("Eliminando en monitoreados");
+        let positionInMonitoreados = this.productosMonitoreados.findIndex((prod)=>prod.uid == productToEliminateInMonitoreados.uid);
         this.productosMonitoreados.splice(positionInMonitoreados,1);
         this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
       }
@@ -112,6 +116,11 @@ export class ProductsService {
 
   filtradoMonitoreados(inputValue: string){
     console.log("Filtrando Monitoreados");
+
+    this.filtradosMonitoreados = this.productosMonitoreados.filter(p => p.nombre.toUpperCase().includes(inputValue.toUpperCase())
+      || p.descripcion.toUpperCase().includes(inputValue.toUpperCase()));
+
+    this.productMonitoreadosSubject.next(this.filtradosMonitoreados);
 
   }
 
@@ -141,7 +150,7 @@ export class ProductsService {
 
   }
 
-  ExisteEsteId(id: number): boolean {
+  existeEsteId(id: number): boolean {
     let productoYaExitente = this.productos.find(prod => prod.uid == id);
     if (productoYaExitente) {
       return true;

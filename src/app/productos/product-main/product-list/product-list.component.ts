@@ -79,4 +79,9 @@ export class ProductListComponent implements OnInit {
     this.productService.filtrandoProductos(this.inputValue);
   }
 
+  buscarMonitoreados(){
+    console.log("Buscando monitoreados");
+    this.productService.filtradoMonitoreados(this.inputValue);
+  }
+
 }

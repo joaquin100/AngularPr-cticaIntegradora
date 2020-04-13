@@ -2,15 +2,27 @@
 <p *ngIf ="modeInventario == false">Modo monitoreados</p>
 
 <div class="row">
-    <div class="col-4">
+
+    <div *ngIf ="modeInventario == true" class="col-4">
         <input type="text"
         [(ngModel)] = "inputValue" 
         (keydown.enter)="buscar()"
          class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
     </div> 
-    <div>
+    <div *ngIf ="modeInventario == true" >
         <a name="" id="" class="btn btn-primary" href="#" routerLink="/products" role="button" (click)="buscar()">Buscar producto</a>
     </div>
+
+    <div *ngIf ="modeInventario == false" class="col-4">
+        <input type="text"
+        [(ngModel)] = "inputValue" 
+        (keydown.enter)="buscarMonitoreados()"
+         class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
+    </div> 
+    <div *ngIf ="modeInventario == false" >
+        <a name="" id="" class="btn btn-primary" href="#" routerLink="/monitoreo" role="button" (click)="buscarMonitoreados()">Buscar producto</a>
+    </div>
+
     <div *ngIf ="modeInventario == true"  class="ml-2">
         <button [disabled] = "!addMonitoreados" (click)="addToMonitoreados()"
         class="btn btn-success"  href="#" routerLink="/products">Añadir seleccionados a monitoreados</button >
