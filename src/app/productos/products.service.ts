@@ -79,7 +79,15 @@ export class ProductsService {
     if (modeInventario == true) {
       console.log("Eliminar en modo inventario");
       console.log("Eliminando la posición", position);
-      
+      let productToEliminateInMonitoreados = Object.assign({}, this.productos[position]);
+      console.log("producto a eliminar en monitoreados",productToEliminateInMonitoreados);
+
+      let existeEnMonitoreados = this.productosMonitoreados.find((prod)=>prod.uid = productToEliminateInMonitoreados.uid);
+      if(existeEnMonitoreados){
+        let positionInMonitoreados = this.productosMonitoreados.findIndex((prod)=>prod.uid = productToEliminateInMonitoreados.uid);
+        this.productosMonitoreados.splice(positionInMonitoreados,1);
+        this.productMonitoreadosSubject.next(this.getProductosMonitoreados());
+      }
       this.productos.splice(position, 1);
       this.productosMonitoreadosBooleans.splice(position, 1);
       
